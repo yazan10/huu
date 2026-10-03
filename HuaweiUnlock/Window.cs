@@ -509,6 +509,11 @@ namespace HuaweiUnlocker
             OpenExternalLink("https://github.com/yazan10/hu");
         }
 
+        private void TelegramBTN_Click(object sender, EventArgs e)
+        {
+            OpenExternalLink("https://t.me/Yazunlo");
+        }
+
         private static void OpenExternalLink(string url)
         {
             try

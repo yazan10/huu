@@ -37,6 +37,7 @@
             this.Tab = new System.Windows.Forms.TabControl();
             this.MA = new System.Windows.Forms.TabPage();
             this.SerialRegistrationBTN = new System.Windows.Forms.Button();
+            this.TelegramBTN = new System.Windows.Forms.Button();
             this.TUTR2 = new System.Windows.Forms.Label();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -2479,6 +2480,22 @@
             this.PGG.ValueMaximum = 100;
             this.PGG.ValueMinimum = 0;
             // 
+            // TelegramBTN
+            // 
+            this.TelegramBTN.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.TelegramBTN.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
+            this.TelegramBTN.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.TelegramBTN.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.TelegramBTN.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.TelegramBTN.ForeColor = System.Drawing.Color.White;
+            this.TelegramBTN.Location = new System.Drawing.Point(1150, 8);
+            this.TelegramBTN.Name = "TelegramBTN";
+            this.TelegramBTN.Size = new System.Drawing.Size(120, 32);
+            this.TelegramBTN.TabIndex = 38;
+            this.TelegramBTN.Text = "✈ Telegram";
+            this.TelegramBTN.UseVisualStyleBackColor = false;
+            this.TelegramBTN.Click += new System.EventHandler(this.TelegramBTN_Click);
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2488,6 +2505,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(38)))), ((int)(((byte)(49)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1280, 744);
+            this.Controls.Add(this.TelegramBTN);
             this.Controls.Add(this.GLOADER);
             this.Controls.Add(this.IdentifyBTN);
             this.Controls.Add(this.button12);
@@ -2688,5 +2706,6 @@
         private System.Windows.Forms.TabPage Dbg;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button SerialRegistrationBTN;
+        private System.Windows.Forms.Button TelegramBTN;
     }
 }
