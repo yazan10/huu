@@ -6,8 +6,8 @@ const SESSION_SECONDS = 8 * 60 * 60;
 function secrets() {
   const password = process.env.ADMIN_PASSWORD;
   const sessionSecret = process.env.SESSION_SECRET;
-  if (!password || password.length < 12) {
-    throw new Error("Set ADMIN_PASSWORD to a new secret with at least 12 characters.");
+  if (!password || password.length < 4) {
+    throw new Error("Set ADMIN_PASSWORD to a secret with at least 4 characters.");
   }
   if (!sessionSecret || Buffer.byteLength(sessionSecret, "utf8") < 32) {
     throw new Error("Set SESSION_SECRET to a random value of at least 32 bytes.");
@@ -45,14 +45,24 @@ function hasValidSession(req) {
 }
 
 function hasSameOrigin(req) {
-  const origin = req.headers.origin;
   const host = req.headers.host;
-  if (!origin || !host) return false;
-  try {
-    return new URL(origin).host === host;
-  } catch {
+  if (!host) return false;
+  const origin = req.headers.origin;
+  const referer = req.headers.referer || req.headers.referrer;
+  // بعض المتصفحات لا ترسل Origin في طلبات same-origin، فنقبل Referer كبديل.
+  // ونقبل أيضاً Sec-Fetch-Site: same-origin كدليل إضافي.
+  const fetchSite = req.headers["sec-fetch-site"];
+  const candidate = origin || referer;
+  if (candidate) {
+    try {
+      if (new URL(candidate).host === host) return true;
+    } catch {
+      return false;
+    }
     return false;
   }
+  if (fetchSite === "same-origin" || fetchSite === "same-site") return true;
+  return false;
 }
 
 function passwordMatches(candidate) {

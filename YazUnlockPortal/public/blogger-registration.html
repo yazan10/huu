@@ -1,55 +1,109 @@
 <!--
-  انسخ هذا الجزء إلى أداة HTML/JavaScript في Blogger بعد استبدال
-  YOUR-VERCEL-PROJECT باسم مشروع Vercel المنشور.
+  Yaz Unlock — Blogger embed (white / blue / black)
+  Production API: https://huu-opal.vercel.app/api/serials/register
+  Admin: https://huu-opal.vercel.app/admin.html
+  انسخ كامل هذا الملف إلى أداة HTML/JavaScript في Blogger.
+  التسجيل والتفعيل فوري بدون أي موافقة يدوية.
 -->
 <div id="yaz-serial-registration" dir="rtl">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    #yaz-serial-registration { max-width: 520px; margin: 20px auto; padding: 22px; border-radius: 12px; background: #1f2937; color: #f9fafb; font: 16px system-ui, sans-serif; }
-    #yaz-serial-registration h2 { margin-top: 0; }
+    #yaz-serial-registration {
+      max-width: 560px; margin: 22px auto; padding: 3px; border-radius: 20px;
+      background: linear-gradient(135deg, #05070d, #1d4ed8 55%, #0ea5e9);
+      font-family: "IBM Plex Sans Arabic", system-ui, Tahoma, sans-serif;
+    }
+    #yaz-serial-registration .yaz-inner {
+      background: #fff; border-radius: 17px; padding: 26px 22px;
+      color: #0b0f1a; text-align: center;
+    }
+    #yaz-serial-registration .yaz-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 12.5px; font-weight: 700; color: #fff;
+      background: linear-gradient(135deg, #05070d, #1d4ed8);
+      padding: 7px 13px; border-radius: 999px; margin-bottom: 10px;
+    }
+    #yaz-serial-registration .yaz-dot { width: 8px; height: 8px; border-radius: 50%; background: #0ea5e9; box-shadow: 0 0 0 4px rgba(14,165,233,.25); }
+    #yaz-serial-registration h2 { margin: 6px 0 4px; font-size: 22px; font-weight: 700; color: #000; }
+    #yaz-serial-registration .yaz-sub { margin: 0 0 16px; font-size: 14px; line-height: 1.9; color: #5b6b82; font-weight: 500; }
+    #yaz-serial-registration .yaz-sub b { color: #1d4ed8; font-weight: 700; }
     #yaz-serial-registration form { display: flex; gap: 10px; flex-wrap: wrap; }
-    #yaz-serial-registration input, #yaz-serial-registration button { box-sizing: border-box; padding: 11px; border-radius: 7px; font: inherit; }
-    #yaz-serial-registration input { flex: 1; min-width: 190px; direction: ltr; background: #111827; border: 1px solid #6b7280; color: #fff; }
-    #yaz-serial-registration button { cursor: pointer; border: 0; background: #2563eb; color: #fff; }
-    #yaz-serial-registration-status { min-height: 1.5em; }
+    #yaz-serial-registration input, #yaz-serial-registration button {
+      box-sizing: border-box; padding: 13px 14px; border-radius: 12px;
+      font-family: inherit; font-size: 15px;
+    }
+    #yaz-serial-registration input {
+      flex: 1; min-width: 190px; direction: ltr; text-align: left;
+      font-family: ui-monospace, Consolas, monospace;
+      background: #f4f7ff; border: 2px solid #dbe4f3; color: #000; outline: none;
+    }
+    #yaz-serial-registration input:focus { border-color: #0ea5e9; box-shadow: 0 0 0 4px rgba(14,165,233,.18); }
+    #yaz-serial-registration button {
+      cursor: pointer; border: 0; color: #fff; font-weight: 700; padding-inline: 22px;
+      background: linear-gradient(135deg, #1d4ed8, #0ea5e9);
+      box-shadow: 0 8px 22px rgba(29,78,216,.35);
+    }
+    #yaz-serial-registration button:disabled { opacity: .6; cursor: not-allowed; }
+    #yaz-serial-registration-status { min-height: 1.7em; margin: 13px 0 0; font-size: 14px; font-weight: 700; line-height: 1.8; }
+    #yaz-serial-registration-status.ok { color: #047857; }
+    #yaz-serial-registration-status.err { color: #b91c1c; }
+    #yaz-serial-registration-status.load { color: #1d4ed8; }
+    #yaz-serial-registration .yaz-foot { margin: 10px 0 0; font-size: 12px; color: #8aa0b8; }
   </style>
-  <h2>تسجيل سيريال الجهاز</h2>
-  <p>أدخل سيريال الجهاز لتسجيله وتفعيله مباشرة دون انتظار موافقة.</p>
-  <form id="yaz-serial-registration-form">
-    <input id="yaz-serial-value" maxlength="128" autocomplete="off" required placeholder="Device serial">
-    <button type="submit">تسجيل</button>
-  </form>
-  <p id="yaz-serial-registration-status" role="status" aria-live="polite"></p>
+  <div class="yaz-inner">
+    <span class="yaz-badge"><span class="yaz-dot"></span> تفعيل فوري — بدون انتظار موافقة</span>
+    <h2>تسجيل سيريال الجهاز</h2>
+    <p class="yaz-sub">أدخل سيريال جهازك وسيتم <b>تسجيله وتفعيله مباشرة</b>، ثم افتح برنامج Huawei Unlock وسيعمل فوراً.</p>
+    <form id="yaz-serial-registration-form">
+      <input id="yaz-serial-value" maxlength="128" autocomplete="off" required placeholder="HUAWEI-ABC123">
+      <button type="submit" id="yaz-serial-btn">تسجيل وتفعيل</button>
+    </form>
+    <p id="yaz-serial-registration-status" role="status" aria-live="polite"></p>
+    <p class="yaz-foot">Yaz Unlock • يعمل تلقائياً على مدار الساعة</p>
+  </div>
 </div>
 <script>
   (function () {
-    var apiUrl = "https://YOUR-VERCEL-PROJECT.vercel.app/api/serials/register";
+    var apiUrl = "https://huu-opal.vercel.app/api/serials/register";
     var form = document.getElementById("yaz-serial-registration-form");
     var input = document.getElementById("yaz-serial-value");
+    var btn = document.getElementById("yaz-serial-btn");
     var status = document.getElementById("yaz-serial-registration-status");
-
+    function setStatus(text, cls) {
+      status.textContent = text;
+      status.className = cls || "";
+    }
     form.addEventListener("submit", async function (event) {
       event.preventDefault();
-      status.textContent = "جارٍ التسجيل...";
+      var serial = (input.value || "").trim();
+      if (!serial) { setStatus("يرجى إدخال السيريال أولاً.", "err"); return; }
+      btn.disabled = true;
+      setStatus("جارٍ التسجيل والتفعيل...", "load");
       try {
         var response = await fetch(apiUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ serial: input.value })
+          body: JSON.stringify({ serial: serial })
         });
-        var result = await response.json();
+        var result = {};
+        try { result = await response.json(); } catch (e) {}
         if (!response.ok) {
-          status.textContent = result.error === "invalid_serial"
-            ? "صيغة السيريال غير صالحة."
-            : "تعذّر إكمال التسجيل. حاول لاحقاً.";
+          setStatus(result.error === "invalid_serial"
+            ? "صيغة السيريال غير صالحة. استخدم حروف وأرقام فقط."
+            : "تعذّر إكمال التسجيل. حاول لاحقاً.", "err");
+          btn.disabled = false;
           return;
         }
-        status.textContent = result.created
-          ? "تم التسجيل والتفعيل بنجاح."
-          : "هذا السيريال مسجل ومفعّل مسبقاً.";
+        setStatus(result.created
+          ? "تم التسجيل والتفعيل بنجاح ✓ افتح البرنامج الآن."
+          : "هذا السيريال مسجل ومفعّل مسبقاً ✓ افتح البرنامج.", "ok");
         input.value = "";
-      } catch {
-        status.textContent = "تعذّر الاتصال بخدمة التسجيل.";
+      } catch (e) {
+        setStatus("تعذّر الاتصال بخدمة التسجيل. تحقق من الإنترنت وحاول مجدداً.", "err");
       }
+      btn.disabled = false;
     });
   }());
 </script>
