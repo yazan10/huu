@@ -1772,7 +1772,7 @@
             this.label4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label4.Text = "تمت البرمجة بواسطة Yaz Unlock";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label4.Click += new System.EventHandler(this.GitHubLink_Click);
+            this.label4.Click += new System.EventHandler(this.DownloadPage_Click);
             //
             // SerialRegistrationBTN
             //

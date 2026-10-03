@@ -504,9 +504,9 @@ namespace HuaweiUnlocker
             OpenExternalLink("https://yaz-blog.blogspot.com/p/serial-huawei.html");
         }
 
-        private void GitHubLink_Click(object sender, EventArgs e)
+        private void DownloadPage_Click(object sender, EventArgs e)
         {
-            OpenExternalLink("https://github.com/yazan10/hu");
+            OpenExternalLink("https://yaz-blog.blogspot.com/p/dawon-hu.html");
         }
 
         private void TelegramBTN_Click(object sender, EventArgs e)
