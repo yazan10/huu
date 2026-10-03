@@ -1,5 +1,5 @@
 const { hasSameOrigin, hasValidSession } = require("../../lib/admin-auth");
-const { ensureSchema, getSql, normalizeSerial, parseBody } = require("../../lib/serials");
+const { deleteSerial, listSerials, normalizeSerial, parseBody } = require("../../lib/serials");
 
 module.exports = async function serials(req, res) {
   try {
@@ -11,22 +11,15 @@ module.exports = async function serials(req, res) {
 
   if (req.method === "GET") {
     try {
-      const sql = getSql();
-      await ensureSchema(sql);
       const requestedPage = Number.parseInt(req.query.page || "0", 10);
       const page = Number.isInteger(requestedPage) && requestedPage >= 0 ? requestedPage : 0;
       const pageSize = 100;
-      const rows = await sql`
-        SELECT serial, created_at
-        FROM registered_serials
-        ORDER BY created_at DESC, serial ASC
-        LIMIT ${pageSize + 1}
-        OFFSET ${page * pageSize}
-      `;
+      const rows = await listSerials();
+      const pageRows = rows.slice(page * pageSize, (page + 1) * pageSize + 1);
       return res.status(200).json({
-        serials: rows.slice(0, pageSize),
+        serials: pageRows.slice(0, pageSize),
         page,
-        hasMore: rows.length > pageSize
+        hasMore: pageRows.length > pageSize
       });
     } catch (error) {
       console.error("Admin serial list failed:", error.message);
@@ -45,14 +38,8 @@ module.exports = async function serials(req, res) {
     if (!serial) return res.status(400).json({ error: "invalid_serial" });
 
     try {
-      const sql = getSql();
-      await ensureSchema(sql);
-      const removed = await sql`
-        DELETE FROM registered_serials
-        WHERE serial = ${serial}
-        RETURNING serial
-      `;
-      return res.status(200).json({ deleted: removed.length > 0 });
+      const deleted = await deleteSerial(serial);
+      return res.status(200).json({ deleted });
     } catch (error) {
       console.error("Admin serial deletion failed:", error.message);
       return res.status(503).json({ error: "serial_delete_unavailable" });

@@ -1,4 +1,4 @@
-const { ensureSchema, getSql, normalizeSerial, parseBody } = require("../../lib/serials");
+const { normalizeSerial, parseBody, registerSerial } = require("../../lib/serials");
 
 module.exports = async function register(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -16,17 +16,10 @@ module.exports = async function register(req, res) {
   if (!serial) return res.status(400).json({ error: "invalid_serial" });
 
   try {
-    const sql = getSql();
-    await ensureSchema(sql);
-    const inserted = await sql`
-      INSERT INTO registered_serials (serial)
-      VALUES (${serial})
-      ON CONFLICT (serial) DO NOTHING
-      RETURNING serial
-    `;
-    return res.status(201).json({ registered: true, created: inserted.length > 0 });
+    const created = await registerSerial(serial);
+    return res.status(201).json({ registered: true, created });
   } catch (error) {
     console.error("Serial registration failed:", error.message);
-    return res.status(500).json({ error: "registration_unavailable" });
+    return res.status(503).json({ error: "registration_unavailable" });
   }
 };
