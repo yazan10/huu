@@ -1,0 +1,14 @@
+.vs/
+.vercel/
+node_modules/
+packages/
+**/bin/
+**/obj/
+**/*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.log
+.env
+.env.*
+!.env.example

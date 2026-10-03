@@ -1,0 +1,55 @@
+<!--
+  انسخ هذا الجزء إلى أداة HTML/JavaScript في Blogger بعد استبدال
+  YOUR-VERCEL-PROJECT باسم مشروع Vercel المنشور.
+-->
+<div id="yaz-serial-registration" dir="rtl">
+  <style>
+    #yaz-serial-registration { max-width: 520px; margin: 20px auto; padding: 22px; border-radius: 12px; background: #1f2937; color: #f9fafb; font: 16px system-ui, sans-serif; }
+    #yaz-serial-registration h2 { margin-top: 0; }
+    #yaz-serial-registration form { display: flex; gap: 10px; flex-wrap: wrap; }
+    #yaz-serial-registration input, #yaz-serial-registration button { box-sizing: border-box; padding: 11px; border-radius: 7px; font: inherit; }
+    #yaz-serial-registration input { flex: 1; min-width: 190px; direction: ltr; background: #111827; border: 1px solid #6b7280; color: #fff; }
+    #yaz-serial-registration button { cursor: pointer; border: 0; background: #2563eb; color: #fff; }
+    #yaz-serial-registration-status { min-height: 1.5em; }
+  </style>
+  <h2>تسجيل سيريال الجهاز</h2>
+  <p>أدخل سيريال الجهاز لتسجيله وتفعيله مباشرة دون انتظار موافقة.</p>
+  <form id="yaz-serial-registration-form">
+    <input id="yaz-serial-value" maxlength="128" autocomplete="off" required placeholder="Device serial">
+    <button type="submit">تسجيل</button>
+  </form>
+  <p id="yaz-serial-registration-status" role="status" aria-live="polite"></p>
+</div>
+<script>
+  (function () {
+    var apiUrl = "https://YOUR-VERCEL-PROJECT.vercel.app/api/serials/register";
+    var form = document.getElementById("yaz-serial-registration-form");
+    var input = document.getElementById("yaz-serial-value");
+    var status = document.getElementById("yaz-serial-registration-status");
+
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      status.textContent = "جارٍ التسجيل...";
+      try {
+        var response = await fetch(apiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ serial: input.value })
+        });
+        var result = await response.json();
+        if (!response.ok) {
+          status.textContent = result.error === "invalid_serial"
+            ? "صيغة السيريال غير صالحة."
+            : "تعذّر إكمال التسجيل. حاول لاحقاً.";
+          return;
+        }
+        status.textContent = result.created
+          ? "تم التسجيل والتفعيل بنجاح."
+          : "هذا السيريال مسجل ومفعّل مسبقاً.";
+        input.value = "";
+      } catch {
+        status.textContent = "تعذّر الاتصال بخدمة التسجيل.";
+      }
+    });
+  }());
+</script>

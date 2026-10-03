@@ -1,0 +1,17 @@
+{
+  "name": "yaz-unlock-serial-portal",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "engines": {
+    "node": "22.x"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.1"
+  },
+  "devDependencies": {
+    "vercel": "^41.6.2"
+  }
+}

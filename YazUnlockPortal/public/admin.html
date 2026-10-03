@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yaz Unlock | إدارة السيريالات</title>
+  <style>
+    :root { color-scheme: dark; font-family: system-ui, sans-serif; background: #111827; color: #f8fafc; }
+    body { margin: 0; padding: 32px 16px; }
+    main { max-width: 860px; margin: auto; }
+    .card { background: #1f2937; border: 1px solid #374151; border-radius: 14px; padding: 24px; margin: 16px 0; }
+    h1, h2 { margin-top: 0; }
+    form { display: flex; gap: 10px; flex-wrap: wrap; }
+    input, button { font: inherit; border-radius: 8px; padding: 10px 12px; }
+    input { color: #f8fafc; background: #111827; border: 1px solid #4b5563; }
+    button { cursor: pointer; border: 0; color: white; background: #2563eb; }
+    button.danger { background: #b91c1c; }
+    button.secondary { background: #4b5563; }
+    #serial { flex: 1; min-width: 200px; direction: ltr; }
+    #message { min-height: 1.5em; color: #93c5fd; }
+    #message.error { color: #fca5a5; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border-bottom: 1px solid #374151; text-align: right; padding: 12px 8px; }
+    td.serial { direction: ltr; text-align: left; overflow-wrap: anywhere; }
+    .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    [hidden] { display: none !important; }
+    @media (max-width: 520px) { body { padding: 16px 8px; } .card { padding: 16px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Yaz Unlock</h1>
+    <section id="login" class="card">
+      <h2>دخول المسؤول</h2>
+      <form id="login-form">
+        <input id="password" type="password" autocomplete="current-password" placeholder="كلمة مرور المسؤول" required>
+        <button type="submit">دخول</button>
+      </form>
+    </section>
+    <section id="dashboard" hidden>
+      <div class="card">
+        <div class="toolbar">
+          <h2>السيريالات المسجلة</h2>
+          <button id="logout" class="secondary" type="button">تسجيل الخروج</button>
+        </div>
+        <p>تُفعّل السيريالات مباشرة عند التسجيل.</p>
+        <form id="add-form">
+          <input id="serial" maxlength="128" autocomplete="off" placeholder="السيريال" required>
+          <button type="submit">إضافة سيريال</button>
+          <button id="refresh" class="secondary" type="button">تحديث</button>
+        </form>
+        <div class="toolbar">
+          <button id="previous-page" class="secondary" type="button" disabled>السابق</button>
+          <span id="page-label"></span>
+          <button id="next-page" class="secondary" type="button" disabled>التالي</button>
+        </div>
+        <p id="message" role="status" aria-live="polite"></p>
+      </div>
+      <div class="card">
+        <table>
+          <thead><tr><th>السيريال</th><th>تاريخ التسجيل</th><th>إجراء</th></tr></thead>
+          <tbody id="serials"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script src="/admin.js" defer></script>
+</body>
+</html>
